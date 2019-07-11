@@ -1,0 +1,60 @@
+$grid-bp-md: 768;
+$grid-bp-lg: 992;
+$grid-bp-xl: 1200;
+$grid-columns: 12;
+$map-grid-props: ('': 0, '-sm': 0, '-md': $grid-bp-md, '-lg': $grid-bp-lg, '-xl': $grid-bp-xl);
+
+// dynamically create media queries
+@mixin create-mq($breakpoint) {
+  @if($breakpoint==0) {
+    @content
+  }
+
+  @else {
+    @media screen and (min-width: $breakpoint * 1px) {
+      @content;
+    }
+  }
+}
+
+// dynamically create column classes
+@mixin create-col-classes($modifier, $grid-columns, $breakpoint) {
+  @include create-mq($breakpoint) {
+    .col#{$modifier}-offset-0 {
+      margin-left: 0;
+    }
+
+    @for $i from 1 through $grid-columns {
+      .col#{$modifier}-#{$i} {
+        flex-basis: (100 / ($grid-columns / $i)) * 1%;
+      }
+
+      .col#{$modifier}-offset-#{$i} {
+        margin-left: (100 / ($grid-columns / $i)) * 1%;
+      }
+    }
+
+  }
+}
+
+
+.container {
+  margin: 0 auto;
+  max-width: $grid-bp-md * 1px;
+
+  &-fluid {
+    max-width: 100%;
+    margin: 0;
+  }
+}
+
+.row {
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+}
+
+@each $modifier,
+$breakpoint in $map-grid-props {
+  @include create-col-classes($modifier, $grid-columns, $breakpoint);
+}

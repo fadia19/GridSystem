@@ -1,0 +1,20 @@
+.container{
+    background: black;
+    padding: 10px;
+    
+    @at-root {
+        [class*='col-'] {
+          width: 150px;
+          height: 100px;
+          background-color: white;
+          outline: black 1px solid;
+          align-items: center;
+          justify-content: space-around;
+          color : rgb(156, 9, 149);
+          text-align: center;
+        }
+      }
+}
+.row{
+  background: grey;   
+}
